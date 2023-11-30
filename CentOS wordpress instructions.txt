@@ -1,0 +1,41 @@
+Adapting from Ubuntu to CentOS for a Wordpress Installation
+
+NOTES: 
+*** the 'apt' package will be replaced with 'yum' :)
+*** apache2 will be replaced with httpd except when using commands, i.e: apachectl configtest
+*** Initially, PHP will be installed with an older version, it has to be updated repeatedly in order for PHP to be updated
+Download Wordpress Zip
+1. download wget: sudo yum install wget
+2. download tar: sudo yum install tar 
+3. proceed to download wordpress. sudo wget https://wordpress.org/latest.tar.gz
+4. then, extract the file using tar: sudo tar -xzvf latest.tar.gz
+5. Now that I had the file downloaded, I used the LAMP method (Linux, Apache, MariaDB, PHP) in order to properly make my wordpress functional.
+INSTALL HTTPD
+6. Update your systems using sudo yum apt update, sudo yum -y upgrade
+7. Install httpd (apache2) sudo yum install httpd
+8. Once httpd has been installed, use sudo systemctl start httpd and sudo systemctl enable httpd
+9. Use sudo systemctl status httpd to confirm that apache2 is running.
+10. Now we will create our default web page. Use cd /var/www/html/ 
+11. Use sudo nano index.html to write HTML, ctrl^c and ctrl^x out.
+INSTALL PHP 
+12. Install these PHP packages for wordpress to be functional with httpd and CentOS. Use sudo yum install to install 
+php
+php-cli
+php-mysql
+php-gd
+php-xml
+
+Also install 
+
+mysql
+mysql-server
+
+INSTALL MARIADB
+
+I installed MariaDB with sudo yum install mariadb-server mariadb-client and checked the status. After installation, I set up the wordpress db and created the user and credentials. 
+
+At this point, having credentials means that you can go to /var/www/html/wordpress and sudo cp wp-config-sample.php wp-config.php and fill out the credential details. I also created login.php and distros.php and completed the variables with the database credentials for the wordpress database.
+
+After double checking the credentials and ensuring all services are running, I put in ;IP ADDRESS;/wordpress/wp-admin/install.php to complete the wordpress installation through the browser. I did experience an issue where my firewall was not allowing http access, so be sure to enable HTTP traffic before anything else. 
+
+These were the steps I took to install wordpress on CentOS!
